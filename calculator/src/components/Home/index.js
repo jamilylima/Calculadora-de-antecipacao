@@ -10,21 +10,13 @@ import Api from "../../services/Api";
 const Home = () => {
   
   const [dados, setDados] = useState([])
-  const [valorParcelas, setValorParcelas] = useState([])
-  
   const { register, handleSubmit } = useForm()
 
   const handleChange = (data) => {
-    setValorParcelas(data)
+    setDados(data)
     Api.post("/", data)
       .then(response => setDados(response.data))
   };
-
-
-  const amanha = Math.round(dados[1] / valorParcelas.installments) - (valorParcelas.mdr / 100 * 1 / 30).toFixed(2)
-  const quinzeDias = Math.round(dados[15] / valorParcelas.installments) - (valorParcelas.mdr / 100 * 15 / 30).toFixed(2)
-  const trintaDias = Math.round((dados[30] / valorParcelas.installments) - valorParcelas.mdr / 100).toFixed(2)
-  const noventaDias = Math.round(dados[90]/ valorParcelas.installments) - valorParcelas.mdr/100 *3
 
   
   return (
@@ -62,10 +54,10 @@ const Home = () => {
 
       <div className='result'>
         <h3>VOCÊ RECEBERÁ:</h3>
-        <span>Amanhã: R$ {amanha > 0 ?(amanha):('0,00')}</span>
-        <span>Em 15 dias: R$ {quinzeDias > 0 ? quinzeDias:('0,00')}</span>
-        <span>Em 30 dias: R$ {trintaDias>0 ?(trintaDias):('0,00') }</span>
-        <span>Em 90 dias: R$ {noventaDias>0 ? (noventaDias):('0,00')}</span>
+        <span>Amanhã: R$ {dados[1]}</span>
+        <span>Em 15 dias: R$ {dados[15]}</span>
+        <span>Em 30 dias: R$ {dados[30]}</span>
+        <span>Em 90 dias: R$ {dados[90]}</span>
       </div>
         
     </main>
